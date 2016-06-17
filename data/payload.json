@@ -1,0 +1,38 @@
+[
+  {
+    "name":"Midlands",
+    "percent":15,
+    "parties":[
+      {
+        "name":"Labour",
+        "votes":102151
+      },
+      {
+        "name":"Tories",
+        "votes":15571
+      },
+      {
+        "name":"Green Party",
+        "votes":8057
+      }
+    ]
+  },
+  {
+    "name":"London",
+    "percent":37,
+    "parties":[
+      {
+        "name":"Labour",
+        "votes":84961
+      },
+      {
+        "name":"Tories",
+        "votes":489484
+      },
+      {
+        "name":"Green Party",
+        "votes":7496
+      }
+    ]
+  }
+]

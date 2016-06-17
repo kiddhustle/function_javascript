@@ -1,0 +1,19 @@
+{
+  "name": "functional_javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "functional.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "baconjs": "^0.7.84",
+    "jquery": "^3.0.0",
+    "lazy": "^1.0.11"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0"
+  }
+}
