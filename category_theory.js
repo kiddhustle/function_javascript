@@ -1,8 +1,9 @@
 import {str, num, bool, func, objectTypeOf,
-obj, arr, date, div} from './lib/types';
+  obj, arr, date, div
+} from './lib/types';
 import {arrayOf} from './lib/functors';
 
-
+import {fcompose} from './lib/composition';
 
 // plusplus :: Int -> Int
 
@@ -24,3 +25,14 @@ const strs = arrayOf(str);
 
 console.log(strs(['a','b','c']));
 // console.log(strs(['a',2,'c']));
+//
+const negate = (n)=> Math.abs(num) * -1;
+
+const add1 = (n)=> num(n) +1;
+
+const square = (n)=> Math.pow( num(n), 2 );
+
+const mult2 = (n)=> num(n) * 2;
+
+const f = fcompose(negate, square, mult2, add1);
+console.log(f(2));
