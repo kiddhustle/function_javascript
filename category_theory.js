@@ -5,6 +5,8 @@ import {arrayOf, maybe, maybeOf, just} from './lib/functors';
 
 import {fcompose} from './lib/composition';
 
+import {User} from './lib/classes';
+
 // plusplus :: Int -> Int
 
 function plusplus(n) {
@@ -42,4 +44,10 @@ maybe(just(123)).x; // Returns 123
 
 console.log(maybeOf(plusplus)(just(123)).x); // Returns 124
 
-maybe(plusplus)(none()).orElse('none'); // returns 'none'
+// maybe(plusplus)(none()).orElse('none'); // returns 'none'
+
+
+var user = new User();
+user.getUsernameMaybe(); // Returns 'anonymous'
+user.setUsername('Laura');
+user.getUsernameMaybe(); // Returns 'Laura'
