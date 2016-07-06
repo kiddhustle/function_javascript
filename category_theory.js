@@ -1,7 +1,7 @@
 import {str, num, bool, func, objectTypeOf,
   obj, arr, date, div
 } from './lib/types';
-import {arrayOf} from './lib/functors';
+import {arrayOf, maybe, maybeOf, just} from './lib/functors';
 
 import {fcompose} from './lib/composition';
 
@@ -36,3 +36,10 @@ const mult2 = (n)=> num(n) * 2;
 
 const f = fcompose(negate, square, mult2, add1);
 console.log(f(2));
+
+
+maybe(just(123)).x; // Returns 123
+
+console.log(maybeOf(plusplus)(just(123)).x); // Returns 124
+
+maybe(plusplus)(none()).orElse('none'); // returns 'none'
