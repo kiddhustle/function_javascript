@@ -1,5 +1,5 @@
 import {str, num, bool, func, objectTypeOf,
-  obj, arr, date, div
+  obj, arr, date, div, checkTypes
 } from './lib/types';
 import {arrayOf, maybe, maybeOf, just} from './lib/functors';
 
@@ -66,3 +66,41 @@ console.log(bob.setUsername('Bob'));
 console.log(userName.get(bob));
 console.log(userName.set(bob, 'Bobby'));
 console.log(userName.get(bob));
+// console.log(userName.mod(strToUpper, bob));
+//
+const homoMorph = function(){
+  let before = checkTypes(
+    arrayOf(func)(Array.prototype.slice.call(arguments, 0, arguments.length -1 ))
+  );
+
+  let after = func(arguments[arguments.length-1]);
+  return function(middle) {
+    return function(args) {
+      return after(middle.apply(this, before
+      ([].slice.apply(arguments))));
+    }
+  }
+};
+
+let lensHM = homoMorph(func, func, func)(lens);
+
+let userNameHM = lensHM(
+  (u)=>u.getUsernameMaybe(),
+  (u,v)=>{
+    u.setUsername(v);
+    return u.getUsernameMaybe();
+  }
+);
+
+let strToUpperCase = homoMorph(str,str)((s)=> s.toUpperCase());
+let morphFirstLetter = homoMorph(func, str, str)((f, s)=> f(s[0]).concat(s.slice(1)));
+let capFirstLetter = homoMorph(str, str)((s)=> morphFirstLetter(strToUpperCase, s));
+
+// homomorphic lenses
+let bill = new User();
+userNameHM.set(bill, 'William');
+console.log(userNameHM.get(bill));
+//compose
+let capitalizedUsername = fcompose(capFirstLetter, userNameHM.get);
+userNameHM.set(bill, 'bill');
+console.log(capitalizedUsername(bill, 'bill'));
