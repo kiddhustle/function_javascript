@@ -6,6 +6,7 @@ import {arrayOf, maybe, maybeOf, just} from './lib/functors';
 import {fcompose} from './lib/composition';
 
 import {User} from './lib/classes';
+import {lens} from './lib/monads';
 
 // plusplus :: Int -> Int
 
@@ -46,8 +47,22 @@ console.log(maybeOf(plusplus)(just(123)).x); // Returns 124
 
 // maybe(plusplus)(none()).orElse('none'); // returns 'none'
 
-
 var user = new User();
-user.getUsernameMaybe(); // Returns 'anonymous'
-user.setUsername('Laura');
-user.getUsernameMaybe(); // Returns 'Laura'
+console.log(user.getUsernameMaybe()); // Returns 'anonymous'
+console.log(user.setUsername('Laura'));
+console.log(user.getUsernameMaybe()); // Returns 'Laura'
+
+// lens
+let userName = lens(
+  (u) => u.getUsernameMaybe(),
+  (u, v) => {
+    u.setUsername(v);
+    return u.getUsernameMaybe()
+  }
+);
+
+let bob = new User();
+console.log(bob.setUsername('Bob'));
+console.log(userName.get(bob));
+console.log(userName.set(bob, 'Bobby'));
+console.log(userName.get(bob));
