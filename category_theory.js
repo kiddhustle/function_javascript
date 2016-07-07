@@ -104,3 +104,13 @@ console.log(userNameHM.get(bill));
 let capitalizedUsername = fcompose(capFirstLetter, userNameHM.get);
 userNameHM.set(bill, 'bill');
 console.log(capitalizedUsername(bill, 'bill'));
+
+// it's a good idea to use homoMorph on .set and .get too
+var getUserName = homoMorph(obj, str)(userNameHM.get);
+var setUserName = homoMorph(obj, str, str)(userNameHM.set);
+getUserName(bill); // Returns: 'Bill'
+setUserName(bill, 'Billy'); // Returns: 'Billy'
+// now we can rewrite capatolizeUsername with the new setter
+capitalizedUsername = fcompose(capFirstLetter, setUserName);
+capitalizedUsername(bill, 'will'); // Returns: 'Will'
+console.log(getUserName(bill)); // Returns: 'will'
