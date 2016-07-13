@@ -1,12 +1,14 @@
 import {str, num, bool, func, objectTypeOf,
   obj, arr, date, div, checkTypes
 } from './lib/types';
-import {arrayOf, maybe, maybeOf, just} from './lib/functors';
+import {arrayOf, maybeOf} from './lib/functors';
 
 import {fcompose} from './lib/composition';
 
 import {User} from './lib/classes';
-import {lens} from './lib/monads';
+import {maybe, just, lens} from './lib/monads';
+
+import {homoMorph} from './lib/morphisms';
 
 // plusplus :: Int -> Int
 
@@ -68,19 +70,6 @@ console.log(userName.set(bob, 'Bobby'));
 console.log(userName.get(bob));
 // console.log(userName.mod(strToUpper, bob));
 //
-const homoMorph = function(){
-  let before = checkTypes(
-    arrayOf(func)(Array.prototype.slice.call(arguments, 0, arguments.length -1 ))
-  );
-
-  let after = func(arguments[arguments.length-1]);
-  return function(middle) {
-    return function(args) {
-      return after(middle.apply(this, before
-      ([].slice.apply(arguments))));
-    }
-  }
-};
 
 let lensHM = homoMorph(func, func, func)(lens);
 
