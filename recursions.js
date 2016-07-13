@@ -1,4 +1,4 @@
-import {thunk} from './lib/monads';
+import {thunk, trampoline, Y} from './lib/optimisations';
 
 const factorial = (n) => {
   // terminate
@@ -22,13 +22,6 @@ const factorialLZ = (n) => {
   };
   return _fact(1, n);
 };
-
-const trampoline = function(f) {
-  while (f && f instanceof Function) {
-    f = f.apply(f.context, f.args);
-  }
-  return f;
-}
 
 const factorialT = function(n) {
     var _fact = function(x, n) {
@@ -57,17 +50,6 @@ const factorialThunk = function(n){
   });
 return trampoline(fact(1, n));
 };
-
-const Y = function(F) {
-  return (function (f) {
-    return f(f);
-  } (function (f) {
-      return F(function (x) {
-        return f(f)(x);
-      });
-    })
-  );
-}
 
 const FactorialGen = function(factorial){
   return (function(n) {
